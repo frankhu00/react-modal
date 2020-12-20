@@ -1,5 +1,5 @@
 {
-    "name": "@anrp/modal",
+    "name": "@frankhu00/react-modal",
     "version": "1.0.0",
     "description": "React modal",
     "main": "dist/umd/index.js",
