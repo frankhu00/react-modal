@@ -1,6 +1,6 @@
 {
     "name": "@frankhu00/react-modal",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "React modal",
     "main": "dist/umd/index.js",
     "module": "dist/esm/index.js",
@@ -50,5 +50,9 @@
         "commitizen": {
             "path": "./node_modules/git-cz"
         }
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/frankhu00/react-modal.git"
     }
 }
