@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useDelayedUnmount } from '@frankhu00/react-animations';
 import CloseIcon from './CloseIcon';
 import { FlexRow, ModalContainer, ModalContent, ModalXButton } from './styled';
 import { ModalContext } from './ModalContext';
@@ -28,9 +29,11 @@ export const Modal = ({
     CustomModalContent = ModalContent,
     CustomPrimaryButton = defaultBtn,
     CustomSecondaryButton = defaultBtn,
+    animationDuration = 500,
     ...props
 }) => {
-    const [show, setShow] = useState(showOnRender);
+    const [isAfterMount, setAfterMount] = useState(false);
+    const [show, setShow, stage] = useDelayedUnmount(animationDuration, showOnRender);
     const [dynamicContent, setDynamicContent] = useState(null);
     const [options, setOptions] = useState({
         showXBtn,
@@ -57,13 +60,20 @@ export const Modal = ({
     };
 
     useEffect(() => {
-        if (show) {
-            if (typeof onModalShow === 'function') {
-                onModalShow();
-            }
-        } else {
-            if (typeof onModalClose === 'function') {
-                onModalClose();
+        setAfterMount(true);
+    }, []);
+
+    useEffect(() => {
+        //Only trigger after initial mounting is done
+        if (isAfterMount) {
+            if (show) {
+                if (typeof onModalShow === 'function') {
+                    onModalShow();
+                }
+            } else {
+                if (typeof onModalClose === 'function') {
+                    onModalClose();
+                }
             }
         }
     }, [show]);
@@ -124,6 +134,8 @@ export const Modal = ({
             {show || options.persist ? (
                 <CustomComponent.Container
                     show={show}
+                    stage={stage}
+                    animationDuration={animationDuration}
                     closeOnBackdrop={options.closeOnBackdrop}
                     onClick={() => {
                         options.closeOnBackdrop ? closeModal() : null;

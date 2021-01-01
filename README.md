@@ -52,6 +52,7 @@ const GrandchildButton = () => {
 | content               | Component \| () => Component | undefined               | A component or function that returns a component to serve as the modal content                                                                                                                    |
 | onModalShow           | func                         | undefined               | Function to trigger when the modal is shown                                                                                                                                                       |
 | onModalClose          | func                         | undefined               | Function to trigger when the modal is closed                                                                                                                                                      |
+| animationDuration     | number                       | 500                     | The fade in / out duration in ms                                                                                                                                                                  |
 | showOnRender          | boolean                      | false                   | If true, modal will display when mounted                                                                                                                                                          |
 | showXBtn              | boolean                      | true                    | If true, a "x" button will rendered at the top right of the modal                                                                                                                                 |
 | persist               | boolean                      | false                   | If true, the modal will be mounted in dom and hidden / shown via CSS                                                                                                                              |
@@ -82,8 +83,10 @@ Below are the methods available to control the modal
 
 ### ModalContainer styled component
 
-**Extend ModalContainer with styled-components to make furthur css changes** since this component is looking for `show`, `zIndex`, and `closeOnBackdrop` prop
+**Extend ModalContainer with styled-components to make furthur css changes** since this component is looking for `show`, `zIndex`, `closeOnBackdrop`, `stage`, `animationDuration` prop for animations and default styling
 
 -   `show` is used to toggle the css display rule
 -   `zIndex` sets z-index rule
 -   `closeOnBackdrop` will set the cursor rule
+-   `stage` is used to determine the component's rendering stage (entering vs exiting) to use either fade in or fade out animation
+-   `animationDuration` specifies the duration of the animation

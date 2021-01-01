@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { DelayUnmountStage, fade } from '@frankhu00/react-animations';
 
 export const FlexRow = styled.div`
     display: flex;
@@ -16,7 +17,20 @@ export const ModalContainer = styled(FlexRow)`
     position: fixed;
     z-index: ${({ zIndex }) => (zIndex ? zIndex : 99)};
     cursor: ${({ closeOnBackdrop }) => (closeOnBackdrop ? 'pointer' : 'initial')};
-    ${({ show }) => (show === false ? `display: none;` : null)}
+    ${({ show }) =>
+        show === false
+            ? css`
+                  display: none;
+              `
+            : null}
+    ${({ stage, animationDuration }) =>
+        stage === DelayUnmountStage.ENTERING
+            ? css`
+                  animation: ${fade.in()} ${Number(animationDuration) / 1000}s forwards;
+              `
+            : css`
+                  animation: ${fade.out()} ${Number(animationDuration) / 1000}s forwards;
+              `}
 `;
 
 export const ModalContent = styled.div`
